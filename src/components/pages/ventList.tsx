@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
 import { useToast } from '@/hooks/use-toast'
@@ -28,8 +28,7 @@ export default function VentList() {
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
-
-  const fetchVents = async () => {
+  const fetchVents = useCallback(async () => {
     setIsLoading(true)
     try {
       const response = await fetch(`/api/vents?page=${page}&limit=10`)
@@ -45,14 +44,15 @@ export default function VentList() {
         description: 'Failed to fetch vents. Please try again.',
         variant: 'destructive',
       })
+      console.error(error)
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [page, toast])
 
   useEffect(() => {
     fetchVents()
-  }, [page])
+  }, [page, fetchVents])
 
   return (
     <div className="space-y-4">

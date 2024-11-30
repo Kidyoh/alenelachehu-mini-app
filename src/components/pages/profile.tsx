@@ -20,7 +20,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const telegramId = (window as any).Telegram.WebApp.initDataUnsafe.user.id.toString()
+        const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id.toString() || ''
         const response = await fetch(`/api/user-profile?telegramId=${telegramId}`)
         if (!response.ok) throw new Error('Failed to fetch profile')
         const data = await response.json()
@@ -31,15 +31,16 @@ export default function Profile() {
           description: 'Failed to fetch profile. Please try again.',
           variant: 'destructive',
         })
+      console.log(error)
       }
     }
     fetchProfile()
-  }, [])
+  }, [toast])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const telegramId = (window as any).Telegram.WebApp.initDataUnsafe.user.id.toString()
+      const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id.toString() || ''
       const response = await fetch(`/api/user-profile?telegramId=${telegramId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -57,6 +58,7 @@ export default function Profile() {
         description: 'Failed to update profile. Please try again.',
         variant: 'destructive',
       })
+      console.error(error)
     }
   }
 

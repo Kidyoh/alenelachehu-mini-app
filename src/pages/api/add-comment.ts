@@ -44,6 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(201).json(comment)
     } catch (error) {
       res.status(500).json({ error: 'Error adding comment' })
+      console.log(error)
     }
   } else {
     res.setHeader('Allow', ['POST'])

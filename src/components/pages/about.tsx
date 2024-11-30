@@ -11,7 +11,7 @@ export default function About() {
         </CardHeader>
         <CardContent>
           <p className="mb-4">
-            "አለንላችሁ" Alenelachehu Charitable Organization (ACO) is a non-profit organization, the first and the only one of its kind in Ethiopia that works purely on mental health in creating awareness and helping those facing mental health challenges.
+          &quot;አለንላችሁ&quot; Alenelachehu Charitable Organization (ACO) is a non-profit organization, the first and the only one of its kind in Ethiopia that works purely on mental health in creating awareness and helping those facing mental health challenges.
           </p>
           <h3 className="text-lg font-semibold mb-2">Mission</h3>
           <ul className="list-disc list-inside mb-4">

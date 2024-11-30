@@ -4,6 +4,25 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/hooks/use-toast'
 
+interface TelegramUser {
+  id: number
+}
+
+interface TelegramWebApp {
+  WebApp: {
+    ready(): unknown
+    initDataUnsafe: {
+      user: TelegramUser
+    }
+  }
+}
+
+declare global {
+  interface Window {
+    Telegram?: TelegramWebApp
+  }
+}
+
 export default function VentingSpace() {
   const [ventContent, setVentContent] = useState('')
   const [allowReactions, setAllowReactions] = useState(false)
@@ -25,7 +44,7 @@ export default function VentingSpace() {
           allowReactions,
           allowPublicComments,
           allowProfessionalComments,
-          telegramId: (window as any).Telegram.WebApp.initDataUnsafe.user.id.toString(),
+          telegramId: window.Telegram?.WebApp?.initDataUnsafe?.user?.id.toString() || '',
         }),
       })
 
@@ -44,6 +63,7 @@ export default function VentingSpace() {
         description: 'Failed to submit vent. Please try again.',
         variant: 'destructive',
       })
+      console.log (error)
     } finally {
       setIsSubmitting(false)
     }

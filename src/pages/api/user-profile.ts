@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).json(user)
     } catch (error) {
       res.status(500).json({ error: 'Error fetching user profile' })
+      console.log(error)
     }
   } else if (req.method === 'PUT') {
     try {
@@ -36,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).json(updatedUser)
     } catch (error) {
       res.status(500).json({ error: 'Error updating user profile' })
+      console.log(error)
     }
   } else {
     res.setHeader('Allow', ['GET', 'PUT'])

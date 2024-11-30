@@ -10,18 +10,21 @@ import Help from '@/components/pages/help'
 import About from '@/components/pages/about'
 import { Button } from '@/components/ui/button'
 
+interface TelegramUser {
+  id: number
+}
 export default function Home() {
   const [currentView, setCurrentView] = useState('menu')
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<TelegramUser | null>(null)
 
   useEffect(() => {
     // Initialize Telegram WebApp
-    const tgWebApp = (window as any).Telegram?.WebApp
+    const tgWebApp = window.Telegram?.WebApp
     if (tgWebApp) {
       tgWebApp.ready()
       setUser(tgWebApp.initDataUnsafe.user)
     }
-  }, [])
+  }, [user])
 
   const renderView = () => {
     switch (currentView) {
@@ -47,7 +50,7 @@ export default function Home() {
       <Head>
         <title>Alenelachehu Venting Platform</title>
         <link rel="icon" href="/favicon.ico" />
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script async src="https://telegram.org/js/telegram-web-app.js"></script>
       </Head>
 
       <main className="container mx-auto px-4 py-8">
@@ -62,4 +65,3 @@ export default function Home() {
     </div>
   )
 }
-
