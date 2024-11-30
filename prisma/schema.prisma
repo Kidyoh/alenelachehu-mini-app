@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  telegramId String  @unique
+  nickname  String?
+  age       Int?
+  gender    String?
+  nationality String?
+  vents     Vent[]
+}
+
+model Vent {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  allowReactions Boolean @default(false)
+  allowPublicComments Boolean @default(false)
+  allowProfessionalComments Boolean @default(true)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  isPublic  Boolean  @default(false)
+  isProfessional Boolean @default(false)
+  vent      Vent     @relation(fields: [ventId], references: [id])
+  ventId    Int
+}
+
